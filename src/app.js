@@ -11,6 +11,7 @@ import categoryRoutes from "./routes/category.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import couponRoutes from "./routes/coupon.routes.js";
 import reviewRoutes from "./routes/review.routes.js";
+import rateLimiter from "./middlewares/rateLimiter.js";
 const app = express();
 
 
@@ -25,6 +26,9 @@ app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
 
+
+app.use(rateLimiter);
+
 // Health check
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
@@ -38,7 +42,10 @@ app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/coupons", couponRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
-// Error middleware (ALWAYS LAST)
+
+
+
+// Error middleware
 app.use(errorMiddleware);
 
 export { app };
