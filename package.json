@@ -2,11 +2,11 @@
   "name": "ecommerce-backend",
   "version": "1.0.0",
   "main": "index.js",
-"type": "module",
-"scripts": {
+  "type": "module",
+  "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
-},
+  },
   "keywords": [
     "javascript",
     "backend",
@@ -15,7 +15,7 @@
     "express",
     "mongodb",
     "rest-api"
-],
+  ],
   "author": "",
   "license": "ISC",
   "description": "",

@@ -1,9 +1,10 @@
 import ApiError from "../utils/ApiError.js";
+import logger from "../utils/logger.js";
 
 const errorMiddleware = (err, req, res, next) => {
   let error = err;
 
-  // If error is NOT ApiError → convert it
+  // Normalize to ApiError
   if (!(error instanceof ApiError)) {
     const statusCode = error.statusCode || 500;
 
@@ -15,7 +16,12 @@ const errorMiddleware = (err, req, res, next) => {
     );
   }
 
-  // Final response
+  // 🔥 Log with context
+  logger.error(
+    `${req.method} ${req.originalUrl} - ${error.statusCode} - ${error.message}`
+  );
+
+  // Response
   res.status(error.statusCode).json({
     success: false,
     message: error.message,
